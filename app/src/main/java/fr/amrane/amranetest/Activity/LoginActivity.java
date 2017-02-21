@@ -15,9 +15,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.ProgressView;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import fr.amrane.amranetest.R;
+import fr.amrane.amranetest.account.activity.HomeActivity;
+import fr.amrane.amranetest.account.model.Account;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by aaitzeouay on 12/12/2016.
@@ -27,13 +35,19 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    @InjectView(R.id.input_email)
+    @BindView(R.id.input_email)
     EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_login)
+    @BindView(R.id.input_password)
+    EditText _passwordText;
+    @BindView(R.id.btn_login)
     Button _loginButton;
-    @InjectView(R.id.link_signup)
+    @BindView(R.id.link_signup)
     TextView _signupLink;
+    @BindView(R.id.login_progessview)
+    ProgressView login_progessview;
+
+    private Realm realm;
+    private Account account;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,10 +57,9 @@ public class LoginActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }*/
         setContentView(R.layout.login_layout);
-        ButterKnife.inject(this);
-
+        ButterKnife.bind(this);
+        setRealmConfiguration();
         _loginButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 login();
@@ -54,14 +67,23 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         _signupLink.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                //Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivityForResult(new Intent(getApplicationContext(), SignupActivity.class), REQUEST_SIGNUP);
             }
         });
+    }
+
+    public void setRealmConfiguration(){
+        RealmConfiguration config = new RealmConfiguration.Builder(this)
+                .name("Account")
+                .schemaVersion(1)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(config);
+
     }
 
     public void login() {
@@ -74,29 +96,43 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        /*final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme);
         //it was R.style.AppTheme_Dark_Dialog
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+        progressDialog.show();*/
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
+                        login_progessview.setVisibility(View.VISIBLE);
                         // On complete call either onLoginSuccess or onLoginFailed
+                        if(!checkUser(email, password)){
+                            onLoginFailed();
+                            return;
+                        }
                         onLoginSuccess();
                         // onLoginFailed();
-                        progressDialog.dismiss();
+                        //progressDialog.dismiss();
                     }
                 }, 3000);
     }
 
+    private boolean checkUser(String mail, String password){
+        RealmResults<Account> accounts = realm.where(Account.class).equalTo("mail", mail).equalTo("password", password).findAll();
+        //Log.d("accounts ", accounts.get(0).toString());
+        /*RealmResults<Account> account =  realm.where(Account.class).contains("mail", mail).findAll();
+        Log.d("Account ", account.get(0).toString());
+        account =  realm.where(Account.class).equalTo("mail", mail).findAll();
+        Log.d("Account equalTo ", account.get(0).toString());*/
+        return (accounts.size() != 0);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -118,12 +154,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         finish();
     }
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
     }
 
@@ -148,5 +184,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        login_progessview.setVisibility(View.GONE);
     }
 }

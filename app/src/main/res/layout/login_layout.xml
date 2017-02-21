@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
@@ -29,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="Email"
+                android:textColorLink="?attr/colorSwitchThumbNormal" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -61,6 +63,17 @@
             android:text="No account yet? Create one"
             android:gravity="center"
             android:textSize="16dip"/>
+
+        <com.rey.material.widget.ProgressView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:pv_autostart="true"
+            app:pv_circular="true"
+            app:pv_progressStyle="@style/Material.Drawable.CircularProgress"
+            app:pv_progressMode="indeterminate"
+            android:id="@+id/login_progessview"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
     </LinearLayout>
 </ScrollView>
