@@ -15,8 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import fr.amrane.amranetest.R;
 
 /**
@@ -27,12 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    @InjectView(R.id.input_email)
+    @BindView(R.id.input_email)
     EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_login)
+    @BindView(R.id.input_password) EditText _passwordText;
+    @BindView(R.id.btn_login)
     Button _loginButton;
-    @InjectView(R.id.link_signup)
+    @BindView(R.id.link_signup)
     TextView _signupLink;
 
     @Override
@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }*/
         setContentView(R.layout.login_layout);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
