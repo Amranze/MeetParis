@@ -76,6 +76,7 @@
     <color name="oxy.fab">#4a90e2</color>
     <color name="thermo.fab">#2c3b88</color>
     <color name="ecg.fab">#6ad195</color>
+    <color name="colorTextPrimary">#212121</color>
 
     <color name="color_oxy_new">#528AC8</color>
 

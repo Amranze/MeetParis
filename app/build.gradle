@@ -42,6 +42,7 @@ dependencies {
     compile('com.google.android.gms:play-services-location:7.5.0') {
         exclude group: 'com.android.support', module: 'multidex'
     }
+    compile 'com.github.nitrico.stickyscrollview:stickyscrollview:1.0.1'
 
     compile 'de.hdodenhof:circleimageview:2.0.0'
     //add it to use butterknive
@@ -73,6 +74,13 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
+
+    //Make text justify
+    compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
+
+    //for circle button
+    compile 'com.github.markushi:circlebutton:1.1'
+
 
     testCompile 'junit:junit:4.12'
 }

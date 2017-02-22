@@ -12,6 +12,7 @@ import io.realm.annotations.PrimaryKey;
 public class Account extends RealmObject {
     private String firstname, lastname, password;
     private Date birthdate;
+    private String picture;
     @PrimaryKey
     private String mail;
 
@@ -24,6 +25,13 @@ public class Account extends RealmObject {
         this.lastname = lastname;
         this.mail = mail;
         this.password = password;
+    }
+    public Account(Account a){
+        this.birthdate = a.getBirthdate();
+        this.firstname = a.getFirstname();
+        this.lastname = a.getLastname();
+        this.mail = a.getMail();
+        this.password = a.getMail();
     }
 
     public Date getBirthdate() {

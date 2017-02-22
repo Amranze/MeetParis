@@ -2,10 +2,13 @@ package fr.amrane.amranetest.account.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.common.dialog.AddAccountDialog;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -29,12 +33,14 @@ import io.realm.RealmConfiguration;
  * Created by aaitzeouay on 21/02/2017.
  */
 
-public class HomeActivity extends Activity  implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
+public class HomeActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
     private Realm realm;
     //@BindView(R.id.tv_mail)
     //TextView tv_mail;
     @BindView(R.id.slider)
     SliderLayout mSlider;
+    @BindView(R.id.btn_home_addAccount)
+    Button btn_home_addAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,29 @@ public class HomeActivity extends Activity  implements BaseSliderView.OnSliderCl
         setContentView(R.layout.home_activity_layout);
         ButterKnife.bind(this);
         setRealmConfiguration();
+        setListeners();
         setMapPicture();
+    }
+
+    private void setListeners() {
+        btn_home_addAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               showAddAccountDialog();
+            }
+        });
+    }
+
+    private void showAddAccountDialog() {
+        final AddAccountDialog accountDialog = new AddAccountDialog();
+        accountDialog.show(getSupportFragmentManager(), accountDialog.getClass().getName());
+        accountDialog.setListener(new AddAccountDialog.OnAddAccountClickListener(){
+            @Override
+            public void OnAddAccountClickListener(Account account) {
+                Log.d("Dialog", "Account");
+                accountDialog.dismiss();
+            }
+        });
     }
 
     private void setMapPicture() {

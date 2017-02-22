@@ -64,12 +64,13 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void setRealmConfiguration(){
-        RealmConfiguration config = new RealmConfiguration.Builder(this)
+        /*RealmConfiguration config = new RealmConfiguration.Builder(this)
                 .name("Account")
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        realm = Realm.getInstance(config);
+        realm = Realm.getInstance(config);*/
+        realm = Realm.getDefaultInstance();
 
     }
     private void setOnClickListener() {

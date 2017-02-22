@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.activity.HomeActivity;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.general.auth.Authentification;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
@@ -34,6 +35,7 @@ import io.realm.RealmResults;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private Authentification authentification;
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -77,12 +79,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void setRealmConfiguration(){
-        RealmConfiguration config = new RealmConfiguration.Builder(this)
+        /*RealmConfiguration config = new RealmConfiguration.Builder(this)
                 .name("Account")
                 .schemaVersion(1)
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        realm = Realm.getInstance(config);
+        realm = Realm.getInstance(config);*/
+        realm = Realm.getDefaultInstance();
 
     }
 
@@ -117,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                             onLoginFailed();
                             return;
                         }
+                        authentification.INSTANCE.setSharedPreferences(email, password, LoginActivity.this);
                         onLoginSuccess();
                         // onLoginFailed();
                         //progressDialog.dismiss();
