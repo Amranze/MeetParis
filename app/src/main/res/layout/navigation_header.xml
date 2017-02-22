@@ -12,20 +12,44 @@
         android:background="@color/primaryColor"
         app:navigationIcon="@drawable/action_bar_back_btn">
 
-        <TextView
+        <!--TextView
             android:id="@+id/tv_toolbar_title"
             style="@style/TextView.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome"/>
+            android:text="Welcome"/-->
+
+        <ImageButton
+            android:id="@+id/btn_show_profiles"
+            style="@style/Button.Navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_drawer_account"
+            android:layout_gravity="left" />
+
+        <ImageButton
+            android:id="@+id/btn_show_likes"
+            style="@style/Button.Navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:src="@drawable/ic_action_map_global"/>
+
+        <ImageButton
+            android:id="@+id/btn_show_profiles"
+            style="@style/Button.Navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/ic_action_image_photo_camera"/>
 
         <ImageButton
             android:id="@+id/btn_drawer_menu"
             style="@style/Button.Navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:src="@drawable/ic_info_white"/>
+            android:src="@drawable/ic_menu_list"
+            android:layout_gravity="right" />
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

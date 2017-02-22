@@ -1,6 +1,7 @@
 package fr.amrane.amranetest.account.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.model.Account;
 import fr.amrane.amranetest.common.dialog.AddAccountDialog;
+import fr.amrane.amranetest.profile.activity.ProfileActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -41,6 +44,8 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
     SliderLayout mSlider;
     @BindView(R.id.btn_home_addAccount)
     Button btn_home_addAccount;
+    @BindView(R.id.btn_show_profiles)
+    ImageButton btn_see_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,12 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
             @Override
             public void onClick(View v) {
                showAddAccountDialog();
+            }
+        });
+        btn_see_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
             }
         });
     }
