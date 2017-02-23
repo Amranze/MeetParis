@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.ProgressView;
 
 import butterknife.BindView;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.activity.HomeActivity;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.account.repository.AccountRepository;
+import fr.amrane.amranetest.account.repository.AccountRepositoryImpl;
 import fr.amrane.amranetest.general.auth.Authentification;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -47,9 +50,12 @@ public class LoginActivity extends AppCompatActivity {
     TextView _signupLink;
     @BindView(R.id.login_progessview)
     ProgressView login_progessview;
+    @BindView(R.id.chbox_remember_me)
+    CheckBox chbox_remember_me;
 
     private Realm realm;
     private Account account;
+    private AccountRepository accountRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
         ButterKnife.bind(this);
         setRealmConfiguration();
+        accountRepository = new AccountRepositoryImpl();
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                             onLoginFailed();
                             return;
                         }
-                        authentification.INSTANCE.setSharedPreferences(email, password, LoginActivity.this);
+                        if(chbox_remember_me.isChecked())
+                            authentification.INSTANCE.setSharedPreferences(email, password, LoginActivity.this);
                         onLoginSuccess();
                         // onLoginFailed();
                         //progressDialog.dismiss();
@@ -129,13 +137,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean checkUser(String mail, String password){
-        RealmResults<Account> accounts = realm.where(Account.class).equalTo("mail", mail).equalTo("password", password).findAll();
+        //RealmResults<Account> accounts = realm.where(Account.class).equalTo("mail", mail).equalTo("password", password).findAll();
         //Log.d("accounts ", accounts.get(0).toString());
         /*RealmResults<Account> account =  realm.where(Account.class).contains("mail", mail).findAll();
         Log.d("Account ", account.get(0).toString());
         account =  realm.where(Account.class).equalTo("mail", mail).findAll();
         Log.d("Account equalTo ", account.get(0).toString());*/
-        return (accounts.size() != 0);
+        //return (accounts.size() != 0);
+        return accountRepository.checkUser(mail, password);
     }
 
     @Override

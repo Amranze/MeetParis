@@ -125,6 +125,17 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
+    public boolean checkUser(String email, String password) {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Account> accounts = realm.where(Account.class)
+                .equalTo(RealmTableSchema.EMAIL, email)
+                .equalTo(RealmTableSchema.PASSWORD, password)
+                .findAll();
+        realm.close();
+        return (accounts.size() == 0);
+    }
+
+    @Override
     public void getAccountByFirstName(String firstname) {
 
     }

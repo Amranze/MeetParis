@@ -54,7 +54,9 @@
             android:text="Remember me"
             android:textAlignment="viewStart"
             android:gravity="center"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:id="@+id/chbox_remember_me"
+            android:elevation="0dp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"

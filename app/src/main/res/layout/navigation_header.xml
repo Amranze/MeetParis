@@ -25,14 +25,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_drawer_account"
-            android:layout_gravity="left" />
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_gravity="center" />
 
         <ImageButton
             android:id="@+id/btn_show_likes"
             style="@style/Button.Navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
             android:src="@drawable/ic_action_map_global"/>
 
         <ImageButton
@@ -40,7 +44,9 @@
             style="@style/Button.Navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
             android:src="@drawable/ic_action_image_photo_camera"/>
 
         <ImageButton

@@ -47,7 +47,7 @@ public interface AccountRepository extends IBaseCallBack {
     void deleteAccount(String email, onDeleteAccountCallBack callback);
     void getAccountByMail(String email, onGetAccountByMailCallBack callback);
     void searchAccountsByNameOrSurname(String query, onSearchAccountsByNameCallBack callback);
-
+    boolean checkUser(String email, String password);
     void getAccountByFirstName(String firstname);
     void getAccountByLastName(String lastname);
     //void addMessage(Message message);
