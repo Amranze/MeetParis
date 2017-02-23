@@ -2,12 +2,14 @@ package fr.amrane.amranetest.account.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,11 +22,13 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.rey.material.widget.FloatingActionButton;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.amrane.amranetest.Activity.Test;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.model.Account;
 import fr.amrane.amranetest.common.dialog.AddAccountDialog;
@@ -42,10 +46,11 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
     //TextView tv_mail;
     @BindView(R.id.slider)
     SliderLayout mSlider;
-    @BindView(R.id.btn_home_addAccount)
-    Button btn_home_addAccount;
     @BindView(R.id.btn_show_profiles)
     ImageButton btn_see_profile;
+    @BindView(R.id.button2)
+    Button button2;
+    private boolean isBtnOff= true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +60,56 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
         setRealmConfiguration();
         setListeners();
         setMapPicture();
+
+        FloatingActionButton bt_float_wave_color = (FloatingActionButton)findViewById(R.id.button_bt_float_wave_color);
+        bt_float_wave_color.setIcon(getDrawable(R.drawable.ic_drawer_account), true);
+
+        //FloatingActionButton bt_float_wave = (FloatingActionButton)findViewById(R.id.button_bt_float_wave);
+        View.OnClickListener listener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(v instanceof  FloatingActionButton){
+                    FloatingActionButton bt = (FloatingActionButton)v;
+                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
+                    bt.setBackgroundColor(getResources().getColor(R.color.accentColor));
+                }
+            }
+        };
+
+        View.OnClickListener listener_delay = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(v instanceof  FloatingActionButton){
+                    FloatingActionButton bt = (FloatingActionButton)v;
+                    if(!isBtnOff) {
+                        bt.setIcon(getDrawable(R.drawable.ic_drawer_account), true);
+                        isBtnOff = true;
+                    }
+                    else {
+                        bt.setIcon(getDrawable(R.drawable.ic_drawer_account_list), true);
+                        isBtnOff = false;
+                    }
+
+                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
+                    //bt.setBackgroundColor(getResources().getColor(R.color.accentColor));
+                    //bt.setIcon(getDrawable(R.drawable.ic_drawer_account), true);
+                }
+            }
+        };
+        //bt_float_wave.setOnClickListener(listener);
+        bt_float_wave_color.setOnClickListener(listener_delay);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, Test.class));
+            }
+        });
     }
 
+
     private void setListeners() {
-        btn_home_addAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               showAddAccountDialog();
-            }
-        });
-        btn_see_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-            }
-        });
     }
 
     private void showAddAccountDialog() {
