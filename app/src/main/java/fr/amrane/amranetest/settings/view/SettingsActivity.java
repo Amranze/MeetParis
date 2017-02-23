@@ -1,4 +1,4 @@
-package fr.amrane.amranetest.settings;
+package fr.amrane.amranetest.settings.view;
 
 /**
  * Created by aaitzeouay on 22/02/2017.
