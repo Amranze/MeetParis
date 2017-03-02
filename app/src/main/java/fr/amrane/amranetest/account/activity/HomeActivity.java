@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,14 +27,17 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.rey.material.widget.FloatingActionButton;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.amrane.amranetest.Activity.Test;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.account.model.User;
 import fr.amrane.amranetest.common.dialog.AddAccountDialog;
 import fr.amrane.amranetest.profile.activity.ProfileActivity;
+import fr.amrane.amranetest.sync.AccountSync;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -46,11 +51,13 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
     //TextView tv_mail;
     @BindView(R.id.slider)
     SliderLayout mSlider;
-    @BindView(R.id.btn_show_profiles)
-    ImageButton btn_see_profile;
+    @BindView(R.id.btn_profiles)
+    ImageButton btn_profiles;
     @BindView(R.id.button2)
     Button button2;
-    private boolean isBtnOff= true;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    private boolean isBtnOff = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,8 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
         setRealmConfiguration();
         setListeners();
         setMapPicture();
+
+        setHandler();
 
         FloatingActionButton bt_float_wave_color = (FloatingActionButton)findViewById(R.id.button_bt_float_wave_color);
         bt_float_wave_color.setIcon(getDrawable(R.drawable.ic_drawer_account), true);
@@ -108,8 +117,29 @@ public class HomeActivity extends AppCompatActivity implements BaseSliderView.On
         });
     }
 
+    private void setHandler() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                new AccountSync().execute("Users/findOnlineUsers");
+            }
+        });
+    }
+
 
     private void setListeners() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        btn_profiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            }
+        });
     }
 
     private void showAddAccountDialog() {

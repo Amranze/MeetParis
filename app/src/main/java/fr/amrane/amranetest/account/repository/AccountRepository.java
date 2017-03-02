@@ -50,5 +50,6 @@ public interface AccountRepository extends IBaseCallBack {
     boolean checkUser(String email, String password);
     void getAccountByFirstName(String firstname);
     void getAccountByLastName(String lastname);
+    Account getCurrentUser();
     //void addMessage(Message message);
 }

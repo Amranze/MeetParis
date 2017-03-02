@@ -1,5 +1,6 @@
 package fr.amrane.amranetest.account.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -9,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by aaitzeouay on 21/02/2017.
  */
 
-public class Account extends RealmObject {
+public class Account extends RealmObject implements Serializable {
     private String firstname, lastname, password;
     private Date birthdate;
     private String picture;

@@ -15,6 +15,7 @@ import io.realm.RealmResults;
  */
 
 public class AccountRepositoryImpl implements AccountRepository {
+    private static Account currentUser;
 
     @Override
     public void addAccount(Account account, onAddAccountCallBack callback) {
@@ -28,6 +29,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         realmAccount.setBirthdate(account.getBirthdate());*/
         realm.copyToRealm(account);
         realm.commitTransaction();
+        currentUser = account;
         if (callback != null)
             callback.onSuccess();
         realm.close();
@@ -59,6 +61,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         result.setPassword(account.getPassword());
         result.setBirthdate(account.getBirthdate());
         realm.commitTransaction();
+        currentUser = account;
         if (callback != null)
             callback.onSuccess(result);
         realm.close();
@@ -86,6 +89,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         RealmResults<Account> account = realm.where(Account.class).equalTo(RealmTableSchema.EMAIL, email).findAll();
         account.deleteAllFromRealm();
         realm.commitTransaction();
+        currentUser = null;
         if (callback != null)
             callback.onSuccess();
         realm.close();
@@ -132,7 +136,11 @@ public class AccountRepositoryImpl implements AccountRepository {
                 .equalTo(RealmTableSchema.PASSWORD, password)
                 .findAll();
         realm.close();
-        return (accounts.size() == 0);
+        if(accounts.size() != 0){
+            currentUser = accounts.first();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -143,6 +151,11 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public void getAccountByLastName(String lastname) {
 
+    }
+
+    @Override
+    public Account getCurrentUser() {
+        return currentUser;
     }
 
     @Override

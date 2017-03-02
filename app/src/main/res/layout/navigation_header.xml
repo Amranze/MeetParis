@@ -20,7 +20,7 @@
             android:text="Welcome"/-->
 
         <ImageButton
-            android:id="@+id/btn_show_profiles"
+            android:id="@+id/btn_profiles"
             style="@style/Button.Navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

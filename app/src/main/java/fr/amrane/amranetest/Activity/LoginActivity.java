@@ -3,6 +3,7 @@ package fr.amrane.amranetest.Activity;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,27 +16,41 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.processbutton.iml.ActionProcessButton;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rey.material.widget.CheckBox;
 import com.rey.material.widget.ProgressView;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.activity.HomeActivity;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.account.model.User;
 import fr.amrane.amranetest.account.repository.AccountRepository;
 import fr.amrane.amranetest.account.repository.AccountRepositoryImpl;
 import fr.amrane.amranetest.general.auth.Authentification;
+import fr.amrane.amranetest.sync.AccountSync;
+import fr.amrane.amranetest.utils.ProgressGenerator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
+import static com.dd.processbutton.iml.ActionProcessButton.Mode.ENDLESS;
+
 /**
  * Created by aaitzeouay on 12/12/2016.
  */
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements ProgressGenerator.OnCompleteListener{
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private Authentification authentification;
@@ -45,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.input_password)
     EditText _passwordText;
     @BindView(R.id.btn_login)
-    Button _loginButton;
+    ActionProcessButton _loginButton;
     @BindView(R.id.link_signup)
     TextView _signupLink;
     @BindView(R.id.login_progessview)
@@ -56,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     private Realm realm;
     private Account account;
     private AccountRepository accountRepository;
+    private ProgressGenerator progressGenerator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +83,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
         ButterKnife.bind(this);
         setRealmConfiguration();
+        setListeners();
+        setupUI();
         accountRepository = new AccountRepositoryImpl();
+        progressGenerator = new ProgressGenerator(this);
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +104,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void setupUI() {
+        _loginButton.setMode(ActionProcessButton.Mode.ENDLESS);
+    }
+
+    private void setListeners() {
+        //final ProgressGenerator progressGenerator = new ProgressGenerator(this);
+    }
+
     public void setRealmConfiguration(){
         /*RealmConfiguration config = new RealmConfiguration.Builder(this)
                 .name("Account")
@@ -100,10 +127,12 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         if (!validate()) {
+            _loginButton.setProgress(-1);
             onLoginFailed();
             return;
         }
-
+        //progressGenerator.start(_loginButton);
+        _loginButton.setProgress(1);
         _loginButton.setEnabled(false);
 
         /*final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
@@ -124,6 +153,9 @@ public class LoginActivity extends AppCompatActivity {
                         login_progessview.setVisibility(View.VISIBLE);
                         // On complete call either onLoginSuccess or onLoginFailed
                         if(!checkUser(email, password)){
+                            //_loginButton.setMode(ENDLESS);
+                            //_loginButton.setMode(ENDLESS);
+                            _loginButton.setProgress(-1);
                             onLoginFailed();
                             return;
                         }
@@ -144,7 +176,21 @@ public class LoginActivity extends AppCompatActivity {
         account =  realm.where(Account.class).equalTo("mail", mail).findAll();
         Log.d("Account equalTo ", account.get(0).toString());*/
         //return (accounts.size() != 0);
-        return accountRepository.checkUser(mail, password);
+
+        //This for checking realm
+        //return accountRepository.checkUser(mail, password);
+        String URL = "findUser/"+mail+"/"+password;
+        try {
+            User user = new CheckAccount().execute(URL).get();
+            if(user != null){
+                Log.d("Users", user.toString());
+                //accountRepository.addAccount();
+                return true;
+            }
+        } catch (Exception e) {
+            Log.d("Exception", e.getMessage());
+        }
+        return false;
     }
 
     @Override
@@ -203,5 +249,27 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         login_progessview.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onComplete() {
+
+    }
+
+    class CheckAccount extends AsyncTask<String, Void, User> {
+        private final static String URL = "http://192.168.24.23:8080/MeetInParis/Users/";
+
+        @Override
+        protected User doInBackground(String... params) {
+            try {
+                Log.d("params", params[0]);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                return restTemplate.getForObject(URL+params[0], User.class);
+            } catch (Exception e) {
+                Log.e("CheckAccount", e.getMessage(), e);
+            }
+            return null;
+        }
     }
 }
