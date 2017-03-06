@@ -5,9 +5,16 @@ buildscript {
         jcenter()
     }
     dependencies {
+<<<<<<< HEAD
         classpath 'com.android.tools.build:gradle:2.2.2'
         classpath "io.realm:realm-gradle-plugin:1.0.0"
 
+=======
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath "io.realm:realm-gradle-plugin:1.0.0"
+        //add it to use butterknive
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+>>>>>>> feature/sprint/1/Fixing_Profile_Screen
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -16,6 +23,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
+        mavenLocal()
     }
 }
 

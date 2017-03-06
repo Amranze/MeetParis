@@ -3,6 +3,10 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/sprint/1/Fixing_Profile_Screen
     <!--Common-->
     <color name="background">#E6000000</color>
 
@@ -67,7 +71,11 @@
     <color name="primaryColorTransparent">#442c3b88</color>
     <color name="primaryColorDark">#171F48</color>
     <color name="accentColor">#2c3b88</color>
+<<<<<<< HEAD
     <color name="accentColorDisabled">#FF5D658C</color>
+=======
+    <color name="accentColorDisabled">#5d658c</color>
+>>>>>>> feature/sprint/1/Fixing_Profile_Screen
     <color name="white_1">#fafaf9</color>
     <color name="white_translucent">#9fffffff</color>
     <color name="white_less_translucent">#efffffff</color>
@@ -75,6 +83,10 @@
     <color name="oxy.fab">#4a90e2</color>
     <color name="thermo.fab">#2c3b88</color>
     <color name="ecg.fab">#6ad195</color>
+<<<<<<< HEAD
+=======
+    <color name="colorTextPrimary">#212121</color>
+>>>>>>> feature/sprint/1/Fixing_Profile_Screen
 
     <color name="color_oxy_new">#528AC8</color>
 
