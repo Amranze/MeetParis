@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Meet In Paris</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_main">DateTimePicker Example</string>
+    <string name="selected_time">The time you picked will be shown here.</string>
+    <string name="selected_date">The date you picked will be shown here.</string>
+    <string name="selected_datetime">The date and time you picked will be shown here.</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_datetime">Pick Date+Time</string>
+    <string name="mode_24_hours">Use 24 hour mode</string>
+    <string name="mode_dark">Use dark theme</string>
+    <string name="mode_custom_accent">Use custom accent</string>
+    <string name="vibrate">Vibrate on touch</string>
+    <string name="dismiss">Dismiss on pause (eg: orientation change)</string>
+    <string name="title">Show a title</string>
+    <string name="show_version_2">Use marshmallow layout</string>
+    <string name="show_year_first">Show the year picker first</string>
+    <string name="enable_seconds">Show seconds picker</string>
+    <string name="enable_minutes">Show minutes picker</string>
+    <string name="limit_times">Limit selectable times</string>
+    <string name="limit_dates">Limit selectable dates</string>
+    <string name="disable_dates">Disable specific dates</string>
+    <string name="highlight_dates">Highlight certain dates</string>
+
+    <string name="tab_title_time">Time</string>
+    <string name="tab_title_date">Date</string>
+    <string name="tab_title_datetime">Date+Time</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="random_text">Ye to misery wisdom plenty polite to as. Prepared interest proposal it he exercise.
+        My wishing an in attempt ferrars. Visited eat you why service looking engaged. At place no walls hopes rooms fully in.
+        Roof hope shy tore leaf joy paid boy.Noisier out brought entered detract because sitting sir. Fat put occasion rendered off humanity has.
+        Bringing so sociable felicity supplied mr. September suspicion far him two acuteness perfectly. Covered as an examine so regular of.
+        Ye astonished friendship remarkably no. Window admire matter praise you bed whence. Delivered ye sportsmen zealously arranging frankness estimable as.
+        Nay any article enabled musical shyness yet sixteen yet blushes. Entire its the did figure wonder off.
+        Wise busy past both park when an ye no. Nay likely her length sooner thrown sex lively income. The expense windows adapted sir.
+        Wrong widen drawn ample eat off doors money. Offending belonging promotion provision an be oh consulted ourselves it.
+        Blessing welcomed ladyship she met humoured sir breeding her. Six curiosity day assurance bed necessary.
+</string>
+</resources>

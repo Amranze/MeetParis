@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="fab_icon">
+        <item>@style/LightFABIcon</item>
+        <item>@style/DarkFABIcon</item>
+    </array>
+
+    <style name="DarkFABIcon" parent="Material.Widget.FloatingActionButton.Light">
+        <item name="rd_rippleColor">#33000000</item>
+        <item name="fab_backgroundColor">@color/colorAccent</item>
+    </style>
+
+    <style name="LightFABIcon" parent="Material.Widget.FloatingActionButton.Light">
+        <item name="rd_rippleColor">#33000000</item>
+        <item name="fab_backgroundColor">@color/colorPrimary</item>
+    </style>
+</resources>
