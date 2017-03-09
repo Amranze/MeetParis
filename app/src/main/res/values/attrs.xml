@@ -46,7 +46,7 @@
         <attr name="rd_bottomPadding" format="reference|dimension"/>
         <attr name="rd_delayClick" format="boolean"/>
     </declare-styleable>
-     
+
     <declare-styleable name="LineMorphingDrawable">
         <attr name="lmd_state" format="reference"/>
         <attr name="lmd_curState" format="integer"/>
@@ -71,7 +71,7 @@
         </attr>
         <attr name="lmd_clockwise" format="boolean"/>
     </declare-styleable>
-     
+
     <declare-styleable name="RadioButtonDrawable">
         <attr name="rbd_width" format="reference|dimension"/>
         <attr name="rbd_height" format="reference|dimension"/>
@@ -81,5 +81,5 @@
         <attr name="rbd_strokeColor" format="reference|color"/>
         <attr name="rbd_animDuration" format="reference|integer"/>
     </declare-styleable>
-     
+
 </resources>

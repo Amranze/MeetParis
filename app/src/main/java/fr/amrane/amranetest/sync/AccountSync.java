@@ -21,7 +21,7 @@ import fr.amrane.amranetest.account.model.User;
  */
 
 public class AccountSync extends AsyncTask<String, Void, List<User>> {
-    private final static String URL = "http://192.168.24.23:8080/MeetInParis/";
+    private final static String URL = "http://192.168.218.1:8080/MeetInParis/";
     private List<User> users;
     @Override
     protected List<User> doInBackground(String... params) {

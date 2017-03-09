@@ -11,7 +11,7 @@ import fr.amrane.amranetest.account.model.User;
 public class ConvertJsonToModel {
     public User convertJsonToUser(Map<String, Object> json){
         User user = new User();
-        user.setId((Long) json.get("id"));
+        user.setId((String) json.get("id"));
         return user;
     }
 }

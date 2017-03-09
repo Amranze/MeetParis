@@ -1,5 +1,7 @@
 package fr.amrane.amranetest.account.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,19 +11,32 @@ import java.util.Map;
  */
 
 public class User {
-    private long _id;
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("firstname")
     private String firstname;
+    @JsonProperty("lastname")
     private String lastname;
+    @JsonProperty("username")
     private String username;
+    @JsonProperty("mail")
     private String mail;
+    @JsonProperty("password")
     private String password;
-    private Date birthdate;
+    @JsonProperty("birthdate")
+    private String birthdate;
+    @JsonProperty("gender")
     private Details.Gender gender;
+    @JsonProperty("age")
     private int age;
+    @JsonProperty("phone")
     private String phone;
     //private Contact contact;
+    @JsonProperty("userDetails")
     private Details userDetails;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("postalCode")
     private int postalCode;
     private String city;
     private String country;
@@ -43,15 +58,25 @@ public class User {
     private SocialNetwork socialNetworks;
     private double actualLocation;
 
-    public User(long _id, String firstname, String lastname, String username,
-                String mail, String password, Date birthdate, int age, Details.Gender gender,
-                String phone, Details userDetails, String address, int postalCode,String city,
+    public User(){
+    }
+
+    public User(String firstname, String lastname, String mail, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.mail = mail;
+        this.password = password;
+    }
+
+    public User(String id, String firstname, String lastname, String username,
+                String mail, String password, String birthdate, int age, Details.Gender gender,
+                String phone, Details userDetails, String address, int postalCode, String city,
                 String country, long lastConnection, long createdDate, boolean active, boolean online,
                 Map<Integer, Conversation> conversations, List<String> pictures, String profilePicture,
                 List<Integer> likes, List<Integer> whoSawMe, List<Integer> whoISaw,
                 SocialNetwork socialNetworks) {
         super();
-        this._id = _id;
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -80,21 +105,21 @@ public class User {
     }
     @Override
     public String toString() {
-        return "User [_id=" + _id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
+        return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", username=" + username
                 + ", mail=" + mail + ", password=" + password + ", birthdate=" + birthdate + ", age=" + age + ", phone="
                 + phone + ", address=" + address + ", postalCode=" + postalCode + ", city=" + city + ", country="
                 + country + ", Gender=" + gender + ", lastConnection=" + lastConnection + ", createdDate="
                 + createdDate + ", online=" + online + ", Active=" + active + ", conversations="+ conversations
                 + ", profilePicture " + profilePicture + ", pictures=" + pictures + ", "+ "likes=" + likes
                 + ", whoSawMe=" + whoSawMe + ", whoISaw=" + whoISaw + " socialNetworks " + socialNetworks
-                + " Details " + userDetails.toString() + "]";
+                + " Details " + (userDetails != null ? userDetails.toString() : null) + "]";
     }
-    public long get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public void set_id(long _id) {
-        this._id = _id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstname() {
@@ -137,11 +162,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

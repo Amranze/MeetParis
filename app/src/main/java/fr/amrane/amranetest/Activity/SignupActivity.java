@@ -24,7 +24,9 @@ import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.activity.HomeActivity;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.account.model.User;
 import fr.amrane.amranetest.common.utils.TimePickerFragment;
+import fr.amrane.amranetest.sync.RegisterAccountSync;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -118,6 +120,7 @@ public class SignupActivity extends AppCompatActivity {
         final String email = _emailText.getText().toString();
         final String password = _passwordText.getText().toString();
         // TODO: Implement your own signup logic here.
+        final User user = new User(firstName, lastName, email, password);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -125,6 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
                         signup_progessview.setVisibility(View.VISIBLE);
+                        new RegisterAccountSync().execute(user);
                         saveAccount(firstName, lastName, email, password);
                         onSignupSuccess();
                         // onSignupFailed();

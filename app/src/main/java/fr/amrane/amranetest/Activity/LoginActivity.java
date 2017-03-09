@@ -23,9 +23,11 @@ import butterknife.ButterKnife;
 import fr.amrane.amranetest.R;
 import fr.amrane.amranetest.account.activity.HomeActivity;
 import fr.amrane.amranetest.account.model.Account;
+import fr.amrane.amranetest.account.model.User;
 import fr.amrane.amranetest.account.repository.AccountRepository;
 import fr.amrane.amranetest.account.repository.AccountRepositoryImpl;
 import fr.amrane.amranetest.general.auth.Authentification;
+import fr.amrane.amranetest.sync.RegisterAccountSync;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
@@ -67,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
         ButterKnife.bind(this);
         setRealmConfiguration();
+
+        User user = new User("Test", "Android", "func@gmail.com", "123456");
+        new RegisterAccountSync().execute(user);
+
         accountRepository = new AccountRepositoryImpl();
         _loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -40,7 +40,7 @@ public class MessagePresenter {
     }
 
     public void sendMessages(Message message){
-        user = accountRepository.getCurrentUser();
+        //user = accountRepository.getCurrentUser();
         if(user != null){
             message.setStatus(Message.STATUS_SENDING);
             messages.add(message);
